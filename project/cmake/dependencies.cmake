@@ -14,3 +14,15 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/posborne/cmsis-svd.git
     GIT_TAG master
 )
+
+FetchContent_Declare(
+    UML-State-Machine-in-C
+    GIT_REPOSITORY https://github.com/kiishor/UML-State-Machine-in-C.git
+    GIT_TAG master
+)
+
+FetchContent_Declare(
+    liblightmodbus
+    GIT_REPOSITORY https://github.com/Jacajack/liblightmodbus.git
+    GIT_TAG v3.0
+)

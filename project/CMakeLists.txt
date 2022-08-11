@@ -16,24 +16,38 @@ set(CMAKE_TOOLCHAIN_FILE ${stm32-cmake_SOURCE_DIR}/cmake/stm32_gcc.cmake)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-project (test_l476 C ASM)
+project (l476_modbus C ASM)
 
 stm32_fetch_cube(L4)
 
 find_package(CMSIS COMPONENTS STM32L476RG REQUIRED)
 find_package(HAL COMPONENTS STM32L4 REQUIRED)
 
+# load dependencies
+FetchContent_MakeAvailable(liblightmodbus)
+FetchContent_MakeAvailable(generic-linked-list)
+
+FetchContent_Populate(UML-State-Machine-in-C)
+set(UMLSMC_SRCS
+${uml-state-machine-in-c_SOURCE_DIR}/src/hsm.c
+)
+
 set(PROJECT_SOURCES
-    test_l476/Core/Src/main.c
-    test_l476/Core/Src/stm32l4xx_hal_msp.c
-    test_l476/Core/Src/stm32l4xx_it.c
+    l476_modbus/Core/Src/main.c
+    l476_modbus/Core/Src/stm32l4xx_hal_msp.c
+    l476_modbus/Core/Src/stm32l4xx_it.c
 )
 
 add_executable(${CMAKE_PROJECT_NAME} ${PROJECT_SOURCES})
 
 include_directories(${CMAKE_PROJECT_NAME}
-    test_l476/Core/Inc
+    l476_modbus/Core/Inc
     ${HAL_INCLUDE_DIRS}
+)
+
+target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
+    ${liblightmodbus_SOURCE_DIR}/include/lightmodbus
+    ${uml-state-machine-in-c_SOURCE_DIR}/src
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} 
@@ -48,4 +62,4 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 )
 stm32_print_size_of_target(${CMAKE_PROJECT_NAME})
 stm32_generate_hex_file(${CMAKE_PROJECT_NAME})
-stm32_add_linker_script(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/test_l476/STM32L476RGTx_FLASH.ld)
+stm32_add_linker_script(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/l476_modbus/STM32L476RGTx_FLASH.ld)
