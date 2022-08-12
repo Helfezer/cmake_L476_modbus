@@ -35,6 +35,8 @@ set(PROJECT_SOURCES
     L476_modbus/Core/Src/stm32l4xx_hal_msp.c
     L476_modbus/Core/Src/stm32l4xx_it.c
     L476_modbus/Core/Src/modbus.c
+    L476_modbus/Core/Src/callbacks.c
+    L476_modbus/Core/Src/platform.c
 )
 
 add_executable(${CMAKE_PROJECT_NAME} ${PROJECT_SOURCES})
