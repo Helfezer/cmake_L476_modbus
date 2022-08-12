@@ -37,6 +37,11 @@ set(PROJECT_SOURCES
     L476_modbus/Core/Src/modbus.c
     L476_modbus/Core/Src/callbacks.c
     L476_modbus/Core/Src/platform.c
+    L476_modbus/Core/Src/state_idle.c
+    L476_modbus/Core/Src/state_receive.c
+    L476_modbus/Core/Src/state_wait.c
+    L476_modbus/Core/Src/state_parse.c
+    ${UMLSMC_SRCS}
 )
 
 add_executable(${CMAKE_PROJECT_NAME} ${PROJECT_SOURCES})
@@ -65,6 +70,9 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     HAL::STM32::L4::TIMEx
     STM32::NoSys
 )
+
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE HSM_CONFIG)
+
 stm32_print_size_of_target(${CMAKE_PROJECT_NAME})
 stm32_generate_hex_file(${CMAKE_PROJECT_NAME})
 stm32_add_linker_script(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/L476_modbus/STM32L476RGTX_FLASH.ld)

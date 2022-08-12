@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "platform.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +46,8 @@ UART_HandleTypeDef huart5;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
-
+struct modbus_device device;
+state_machine_t * const State_Machines[] = {&device.Machine};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -61,7 +62,10 @@ static void MX_TIM3_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+struct modbus_device* getDevice(void)
+{
+  return &device;
+}
 /* USER CODE END 0 */
 
 /**
@@ -80,7 +84,9 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  device.timer = &htim3;
+  device.uart = &huart3;
+  ModbusDevice_Init(&device);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -96,8 +102,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  platform_set_timer(&htim3, 1000u);
-  platform_start_timer(&htim3);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

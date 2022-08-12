@@ -1,3 +1,5 @@
+#ifndef INC_STATE_H
+#define INC_STATE_H
 #include "hsm.h"
 
 /*
@@ -30,3 +32,5 @@ state_machine_result_t parse_exit_handler(state_machine_t* const StateMachine);
 state_machine_result_t wait_handler(state_machine_t* const StateMachine);
 state_machine_result_t wait_entry_handler(state_machine_t* const StateMachine);
 state_machine_result_t wait_exit_handler(state_machine_t* const StateMachine);
+
+#endif //INC_STATE_H
