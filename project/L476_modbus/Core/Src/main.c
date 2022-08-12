@@ -84,9 +84,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  device.timer = &htim3;
-  device.uart = &huart3;
-  ModbusDevice_Init(&device);
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -102,7 +100,9 @@ int main(void)
   MX_USART3_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-
+  device.timer = &htim3;
+  device.uart = &huart3;
+  ModbusDevice_Init(&device);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -110,7 +110,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    ModbusDevice_Runtime(&device);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
