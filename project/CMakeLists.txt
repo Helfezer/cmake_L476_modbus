@@ -16,7 +16,7 @@ set(CMAKE_TOOLCHAIN_FILE ${stm32-cmake_SOURCE_DIR}/cmake/stm32_gcc.cmake)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-project (l476_modbus C ASM)
+project (L476_modbus C ASM)
 
 stm32_fetch_cube(L4)
 
@@ -25,23 +25,21 @@ find_package(HAL COMPONENTS STM32L4 REQUIRED)
 
 # load dependencies
 FetchContent_MakeAvailable(liblightmodbus)
-FetchContent_MakeAvailable(generic-linked-list)
-
 FetchContent_Populate(UML-State-Machine-in-C)
 set(UMLSMC_SRCS
 ${uml-state-machine-in-c_SOURCE_DIR}/src/hsm.c
 )
 
 set(PROJECT_SOURCES
-    l476_modbus/Core/Src/main.c
-    l476_modbus/Core/Src/stm32l4xx_hal_msp.c
-    l476_modbus/Core/Src/stm32l4xx_it.c
+    L476_modbus/Core/Src/main.c
+    L476_modbus/Core/Src/stm32l4xx_hal_msp.c
+    L476_modbus/Core/Src/stm32l4xx_it.c
 )
 
 add_executable(${CMAKE_PROJECT_NAME} ${PROJECT_SOURCES})
 
 include_directories(${CMAKE_PROJECT_NAME}
-    l476_modbus/Core/Inc
+    L476_modbus/Core/Inc
     ${HAL_INCLUDE_DIRS}
 )
 
@@ -58,8 +56,12 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     HAL::STM32::L4::PWREx
     HAL::STM32::L4::CORTEX
     HAL::STM32::L4::RCCEx
+    HAL::STM32::L4::DMA
+    HAL::STM32::L4::UARTEx
+    HAL::STM32::L4::TIM
+    HAL::STM32::L4::TIMEx
     STM32::NoSys
 )
 stm32_print_size_of_target(${CMAKE_PROJECT_NAME})
 stm32_generate_hex_file(${CMAKE_PROJECT_NAME})
-stm32_add_linker_script(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/l476_modbus/STM32L476RGTx_FLASH.ld)
+stm32_add_linker_script(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/L476_modbus/STM32L476RGTX_FLASH.ld)
