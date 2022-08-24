@@ -162,14 +162,16 @@ void ModbusDevice_Init(struct modbus_device *device)
     //! 4- Modbus initialization
     ModbusErrorInfo err;
 
-    // err = modbusSlaveInit(&device->slave[0],
-    //                       regCallback,
-    //                       NULL,
-    //                       staticAllocator,
-    //                       modbusSlaveDefaultFunctions,
-    //                       modbusSlaveDefaultFunctionCount);
+    err = modbusSlaveInit(&device->slave[0],
+                          regCallback,
+                          NULL,
+                          staticAllocator,
+                          modbusSlaveDefaultFunctions,
+                          modbusSlaveDefaultFunctionCount);
 
     assert(modbusIsOk(err));
+
+    idle_entry_handler((state_machine_t*)device);
 }
 
 // ============================================================================
