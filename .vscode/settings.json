@@ -1,4 +1,7 @@
 {
     "terminal.integrated.inheritEnv": true,
     "terminal.integrated.defaultProfile.linux": "bash",
+    "files.associations": {
+        "main.h": "c"
+    },
 }
