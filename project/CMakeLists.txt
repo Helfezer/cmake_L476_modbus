@@ -68,6 +68,8 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     HAL::STM32::L4::UARTEx
     HAL::STM32::L4::TIM
     HAL::STM32::L4::TIMEx
+    HAL::STM32::L4::DAC
+    HAL::STM32::L4::DACEx
     STM32::NoSys
 )
 

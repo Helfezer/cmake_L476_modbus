@@ -80,7 +80,7 @@
             "type": "command",
             "command": "shellCommand.execute",
             "args": {
-                "command": "grep CMAKE_DEBUGGER build/CMakeCache.txt | cut -d \"=\" -f2",
+                "command": "grep CMAKE_DEBU[G]*ER build/CMakeCache.txt | cut -d \"=\" -f2",
                 "useSingleResult": true,
                 "cwd": "${workspaceFolder}",
             }
