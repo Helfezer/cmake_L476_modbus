@@ -79,3 +79,5 @@ stm32_print_size_of_target(${CMAKE_PROJECT_NAME})
 stm32_generate_hex_file(${CMAKE_PROJECT_NAME})
 stm32_generate_binary_file(${CMAKE_PROJECT_NAME})
 stm32_add_linker_script(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/L476_modbus/STM32L476RGTX_FLASH.ld)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
