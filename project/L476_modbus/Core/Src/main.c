@@ -120,17 +120,19 @@ int main(void)
   }
  
   /*##-5- Set DAC channel1 DHR12RD register ################################################*/
-  if (HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0x100) != HAL_OK)
-  {
-    /* Setting value Error */
-    Error_Handler();
-  }
+  // if (HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0x100) != HAL_OK)
+  // {
+  //   /* Setting value Error */
+  //   Error_Handler();
+  // }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    DAC1->DHR12R1 = (DAC1->DHR12R1 + 100) % 4096;
+    HAL_Delay(5);
     /* USER CODE END WHILE */
     // ModbusDevice_Runtime(&device);
     /* USER CODE BEGIN 3 */
@@ -220,7 +222,7 @@ static void MX_DAC1_Init(void)
   /** DAC channel OUT1 config
   */
   sConfig.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
-  sConfig.DAC_Trigger = DAC_TRIGGER_T6_TRGO;
+  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
   sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
   sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
@@ -228,12 +230,12 @@ static void MX_DAC1_Init(void)
   {
     Error_Handler();
   }
-  /** Configure Triangle wave generation on DAC OUT1
-  */
-  if (HAL_DACEx_TriangleWaveGenerate(&hdac1, DAC_CHANNEL_1, DAC_TRIANGLEAMPLITUDE_1023) != HAL_OK)
-  {
-    Error_Handler();
-  }
+  // /** Configure Triangle wave generation on DAC OUT1
+  // */
+  // if (HAL_DACEx_TriangleWaveGenerate(&hdac1, DAC_CHANNEL_1, DAC_TRIANGLEAMPLITUDE_1023) != HAL_OK)
+  // {
+  //   Error_Handler();
+  // }
   /* USER CODE BEGIN DAC1_Init 2 */
 
   /* USER CODE END DAC1_Init 2 */
