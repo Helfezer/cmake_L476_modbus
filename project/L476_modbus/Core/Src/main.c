@@ -106,7 +106,27 @@ int main(void)
   /* USER CODE BEGIN 2 */
   device.timer = &htim3;
   device.uart = &huart3;
-  ModbusDevice_Init(&device);
+  // ModbusDevice_Init(&device);
+
+  if (HAL_DACEx_TriangleWaveGenerate(&hdac1, DAC_CHANNEL_1, DAC_TRIANGLEAMPLITUDE_1023) != HAL_OK)
+  {
+    /* Triangle wave generation Error */
+    Error_Handler();
+  }
+
+  /*##-4- Enable DAC Channel1 ################################################*/
+  if (HAL_DAC_Start(&hdac1, DAC_CHANNEL_1) != HAL_OK)
+  {
+    /* Start Error */
+    Error_Handler();
+  }
+
+  /*##-5- Set DAC channel1 DHR12RD register ################################################*/
+  if (HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0x100) != HAL_OK)
+  {
+    /* Setting value Error */
+    Error_Handler();
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -114,7 +134,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    ModbusDevice_Runtime(&device);
+    // ModbusDevice_Runtime(&device);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -202,7 +222,7 @@ static void MX_DAC1_Init(void)
   /** DAC channel OUT1 config
   */
   sConfig.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
-  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
+  sConfig.DAC_Trigger = DAC_TRIGGER_SOFTWARE;
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
   sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
   sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
